@@ -591,9 +591,9 @@ function checkTime(i) {
                 this.trackCSSObjectInteractions();
                 this.setupPeriodicLogging();
                 
-                console.log('🎯 User Interaction Tracker Initialized');
-                console.log('📊 Session ID:', this.sessionId);
-                console.log('⏰ Start Time:', this.startTime.toLocaleString());
+                console.log('User Interaction Tracker Initialized');
+                console.log('Session ID:', this.sessionId);
+                console.log('Start Time:', this.startTime.toLocaleString());
             }
 
             trackPageView() {
@@ -611,7 +611,7 @@ function checkTime(i) {
                 };
 
                 this.trackingData.pageViews.push(pageView);
-                console.log('📄 Page View Tracked:', pageView);
+                console.log('Page View Tracked:', pageView);
             }
 
             trackClickEvents() {
@@ -643,7 +643,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.clickEvents.push(clickData);
-                    console.log('🖱️ Click Event:', clickData);
+                    console.log('Click Event:', clickData);
                 });
 
                 // Track double clicks
@@ -665,7 +665,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.clickEvents.push(doubleClickData);
-                    console.log('🖱️🖱️ Double Click Event:', doubleClickData);
+                    console.log('Double Click Event:', doubleClickData);
                 });
 
                 // Track right clicks
@@ -687,7 +687,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.clickEvents.push(rightClickData);
-                    console.log('🖱️ Right Click Event:', rightClickData);
+                    console.log('Right Click Event:', rightClickData);
                 });
             }
 
@@ -709,7 +709,7 @@ function checkTime(i) {
                         };
 
                         this.trackingData.scrollEvents.push(scrollData);
-                        console.log('📜 Scroll Event:', scrollData);
+                        console.log('Scroll Event:', scrollData);
                     }, 150);
                 });
             }
@@ -734,7 +734,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.hoverEvents.push(hoverData);
-                    console.log('🖱️ Hover Enter:', hoverData);
+                    console.log('Hover Enter:', hoverData);
                 }, true);
 
                 // Track mouse leave events
@@ -756,7 +756,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.hoverEvents.push(hoverData);
-                    console.log('🖱️ Hover Leave:', hoverData);
+                    console.log('Hover Leave:', hoverData);
                 }, true);
             }
 
@@ -774,7 +774,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.formInteractions.push(formData);
-                    console.log('📝 Form Submit:', formData);
+                    console.log('Form Submit:', formData);
                 });
 
                 // Track input focus events
@@ -794,7 +794,7 @@ function checkTime(i) {
                         };
 
                         this.trackingData.formInteractions.push(focusData);
-                        console.log('📝 Input Focus:', focusData);
+                        console.log('Input Focus:', focusData);
                     }
                 }, true);
 
@@ -815,7 +815,7 @@ function checkTime(i) {
                         };
 
                         this.trackingData.formInteractions.push(blurData);
-                        console.log('📝 Input Blur:', blurData);
+                        console.log('Input Blur:', blurData);
                     }
                 }, true);
             }
@@ -851,7 +851,7 @@ function checkTime(i) {
                                     };
 
                                     this.trackingData.cssObjectInteractions.push(cssData);
-                                    console.log('🎨 CSS Class Change:', cssData);
+                                    console.log('CSS Class Change:', cssData);
                                 }
                             });
                         });
@@ -896,7 +896,7 @@ function checkTime(i) {
                     };
 
                     this.trackingData.cssObjectInteractions.push(transitionData);
-                    console.log('🎭 Transition Start:', transitionData);
+                    console.log('Transition Start:', transitionData);
                 });
             }
 
@@ -927,7 +927,7 @@ function checkTime(i) {
                     timestamp: new Date().toISOString()
                 };
 
-                console.log('📊 Session Summary:', summary);
+                console.log('Session Summary:', summary);
             }
 
             logDetailedStats() {
@@ -943,7 +943,7 @@ function checkTime(i) {
                     }
                 };
 
-                console.log('📈 Detailed Statistics:', stats);
+                console.log('Detailed Statistics:', stats);
             }
 
             getMostClickedElements() {
