@@ -561,6 +561,464 @@ function checkTime(i) {
             if (i < 10) { i = "0" + i; }
   return i;
 }
+
+        // Comprehensive User Interaction Tracking System
+        class UserInteractionTracker {
+            constructor() {
+                this.trackingData = {
+                    pageViews: [],
+                    clickEvents: [],
+                    scrollEvents: [],
+                    hoverEvents: [],
+                    formInteractions: [],
+                    cssObjectInteractions: []
+                };
+                this.sessionId = this.generateSessionId();
+                this.startTime = new Date();
+                this.init();
+            }
+
+            generateSessionId() {
+                return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            init() {
+                this.trackPageView();
+                this.trackClickEvents();
+                this.trackScrollEvents();
+                this.trackHoverEvents();
+                this.trackFormInteractions();
+                this.trackCSSObjectInteractions();
+                this.setupPeriodicLogging();
+                
+                console.log('🎯 User Interaction Tracker Initialized');
+                console.log('📊 Session ID:', this.sessionId);
+                console.log('⏰ Start Time:', this.startTime.toLocaleString());
+            }
+
+            trackPageView() {
+                const pageView = {
+                    timestamp: new Date().toISOString(),
+                    url: window.location.href,
+                    title: document.title,
+                    referrer: document.referrer,
+                    viewport: {
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    },
+                    userAgent: navigator.userAgent,
+                    sessionId: this.sessionId
+                };
+
+                this.trackingData.pageViews.push(pageView);
+                console.log('📄 Page View Tracked:', pageView);
+            }
+
+            trackClickEvents() {
+                // Track clicks on all elements
+                document.addEventListener('click', (event) => {
+                    const clickData = {
+                        timestamp: new Date().toISOString(),
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null,
+                            textContent: event.target.textContent?.substring(0, 100) || null,
+                            href: event.target.href || null,
+                            type: event.target.type || null
+                        },
+                        position: {
+                            x: event.clientX,
+                            y: event.clientY,
+                            pageX: event.pageX,
+                            pageY: event.pageY
+                        },
+                        modifiers: {
+                            ctrlKey: event.ctrlKey,
+                            shiftKey: event.shiftKey,
+                            altKey: event.altKey,
+                            metaKey: event.metaKey
+                        },
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.clickEvents.push(clickData);
+                    console.log('🖱️ Click Event:', clickData);
+                });
+
+                // Track double clicks
+                document.addEventListener('dblclick', (event) => {
+                    const doubleClickData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'doubleclick',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null,
+                            textContent: event.target.textContent?.substring(0, 100) || null
+                        },
+                        position: {
+                            x: event.clientX,
+                            y: event.clientY
+                        },
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.clickEvents.push(doubleClickData);
+                    console.log('🖱️🖱️ Double Click Event:', doubleClickData);
+                });
+
+                // Track right clicks
+                document.addEventListener('contextmenu', (event) => {
+                    const rightClickData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'rightclick',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null,
+                            textContent: event.target.textContent?.substring(0, 100) || null
+                        },
+                        position: {
+                            x: event.clientX,
+                            y: event.clientY
+                        },
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.clickEvents.push(rightClickData);
+                    console.log('🖱️ Right Click Event:', rightClickData);
+                });
+            }
+
+            trackScrollEvents() {
+                let scrollTimeout;
+                window.addEventListener('scroll', () => {
+                    clearTimeout(scrollTimeout);
+                    scrollTimeout = setTimeout(() => {
+                        const scrollData = {
+                            timestamp: new Date().toISOString(),
+                            scrollPosition: {
+                                x: window.pageXOffset,
+                                y: window.pageYOffset
+                            },
+                            documentHeight: document.documentElement.scrollHeight,
+                            viewportHeight: window.innerHeight,
+                            scrollPercentage: Math.round((window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100),
+                            sessionId: this.sessionId
+                        };
+
+                        this.trackingData.scrollEvents.push(scrollData);
+                        console.log('📜 Scroll Event:', scrollData);
+                    }, 150);
+                });
+            }
+
+            trackHoverEvents() {
+                // Track mouse enter events
+                document.addEventListener('mouseenter', (event) => {
+                    const hoverData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'mouseenter',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null,
+                            textContent: event.target.textContent?.substring(0, 50) || null
+                        },
+                        position: {
+                            x: event.clientX,
+                            y: event.clientY
+                        },
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.hoverEvents.push(hoverData);
+                    console.log('🖱️ Hover Enter:', hoverData);
+                }, true);
+
+                // Track mouse leave events
+                document.addEventListener('mouseleave', (event) => {
+                    const hoverData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'mouseleave',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null,
+                            textContent: event.target.textContent?.substring(0, 50) || null
+                        },
+                        position: {
+                            x: event.clientX,
+                            y: event.clientY
+                        },
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.hoverEvents.push(hoverData);
+                    console.log('🖱️ Hover Leave:', hoverData);
+                }, true);
+            }
+
+            trackFormInteractions() {
+                // Track form submissions
+                document.addEventListener('submit', (event) => {
+                    const formData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'form_submit',
+                        formId: event.target.id || null,
+                        formClass: event.target.className || null,
+                        formAction: event.target.action || null,
+                        formMethod: event.target.method || null,
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.formInteractions.push(formData);
+                    console.log('📝 Form Submit:', formData);
+                });
+
+                // Track input focus events
+                document.addEventListener('focus', (event) => {
+                    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) {
+                        const focusData = {
+                            timestamp: new Date().toISOString(),
+                            type: 'input_focus',
+                            element: {
+                                tagName: event.target.tagName,
+                                type: event.target.type || null,
+                                name: event.target.name || null,
+                                id: event.target.id || null,
+                                placeholder: event.target.placeholder || null
+                            },
+                            sessionId: this.sessionId
+                        };
+
+                        this.trackingData.formInteractions.push(focusData);
+                        console.log('📝 Input Focus:', focusData);
+                    }
+                }, true);
+
+                // Track input blur events
+                document.addEventListener('blur', (event) => {
+                    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(event.target.tagName)) {
+                        const blurData = {
+                            timestamp: new Date().toISOString(),
+                            type: 'input_blur',
+                            element: {
+                                tagName: event.target.tagName,
+                                type: event.target.type || null,
+                                name: event.target.name || null,
+                                id: event.target.id || null,
+                                value: event.target.value?.substring(0, 50) || null
+                            },
+                            sessionId: this.sessionId
+                        };
+
+                        this.trackingData.formInteractions.push(blurData);
+                        console.log('📝 Input Blur:', blurData);
+                    }
+                }, true);
+            }
+
+            trackCSSObjectInteractions() {
+                // Track CSS transitions and animations
+                const styleSheets = document.styleSheets;
+                
+                // Track elements with CSS classes that might indicate interactivity
+                const interactiveSelectors = [
+                    '.nav-link', '.link', '.card', '.badge', '.staff-card',
+                    '.modern-table tr', '.scroll-to-top', 'button', 'a'
+                ];
+
+                interactiveSelectors.forEach(selector => {
+                    const elements = document.querySelectorAll(selector);
+                    elements.forEach(element => {
+                        // Track CSS class changes
+                        const observer = new MutationObserver((mutations) => {
+                            mutations.forEach((mutation) => {
+                                if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+                                    const cssData = {
+                                        timestamp: new Date().toISOString(),
+                                        type: 'css_class_change',
+                                        element: {
+                                            tagName: element.tagName,
+                                            id: element.id || null,
+                                            oldClass: mutation.oldValue || null,
+                                            newClass: element.className || null,
+                                            selector: selector
+                                        },
+                                        sessionId: this.sessionId
+                                    };
+
+                                    this.trackingData.cssObjectInteractions.push(cssData);
+                                    console.log('🎨 CSS Class Change:', cssData);
+                                }
+                            });
+                        });
+
+                        observer.observe(element, {
+                            attributes: true,
+                            attributeOldValue: true,
+                            attributeFilter: ['class']
+                        });
+                    });
+                });
+
+                // Track CSS animations and transitions
+                document.addEventListener('animationstart', (event) => {
+                    const animationData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'animation_start',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null
+                        },
+                        animationName: event.animationName,
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.cssObjectInteractions.push(animationData);
+                    console.log('🎬 Animation Start:', animationData);
+                });
+
+                document.addEventListener('transitionstart', (event) => {
+                    const transitionData = {
+                        timestamp: new Date().toISOString(),
+                        type: 'transition_start',
+                        element: {
+                            tagName: event.target.tagName,
+                            id: event.target.id || null,
+                            className: event.target.className || null
+                        },
+                        propertyName: event.propertyName,
+                        sessionId: this.sessionId
+                    };
+
+                    this.trackingData.cssObjectInteractions.push(transitionData);
+                    console.log('🎭 Transition Start:', transitionData);
+                });
+            }
+
+            setupPeriodicLogging() {
+                // Log summary every 30 seconds
+                setInterval(() => {
+                    this.logSummary();
+                }, 30000);
+
+                // Log detailed stats every 2 minutes
+                setInterval(() => {
+                    this.logDetailedStats();
+                }, 120000);
+            }
+
+            logSummary() {
+                const summary = {
+                    sessionId: this.sessionId,
+                    duration: Math.round((new Date() - this.startTime) / 1000) + ' seconds',
+                    totalEvents: {
+                        pageViews: this.trackingData.pageViews.length,
+                        clicks: this.trackingData.clickEvents.length,
+                        scrolls: this.trackingData.scrollEvents.length,
+                        hovers: this.trackingData.hoverEvents.length,
+                        formInteractions: this.trackingData.formInteractions.length,
+                        cssInteractions: this.trackingData.cssObjectInteractions.length
+                    },
+                    timestamp: new Date().toISOString()
+                };
+
+                console.log('📊 Session Summary:', summary);
+            }
+
+            logDetailedStats() {
+                const stats = {
+                    sessionId: this.sessionId,
+                    timestamp: new Date().toISOString(),
+                    detailedStats: {
+                        mostClickedElements: this.getMostClickedElements(),
+                        scrollDepth: this.getScrollDepth(),
+                        timeOnPage: this.getTimeOnPage(),
+                        formInteractions: this.getFormStats(),
+                        cssAnimations: this.getCSSStats()
+                    }
+                };
+
+                console.log('📈 Detailed Statistics:', stats);
+            }
+
+            getMostClickedElements() {
+                const clickCounts = {};
+                this.trackingData.clickEvents.forEach(click => {
+                    const key = `${click.element.tagName}${click.element.id ? '#' + click.element.id : ''}${click.element.className ? '.' + click.element.className.split(' ')[0] : ''}`;
+                    clickCounts[key] = (clickCounts[key] || 0) + 1;
+                });
+
+                return Object.entries(clickCounts)
+                    .sort(([,a], [,b]) => b - a)
+                    .slice(0, 5)
+                    .map(([element, count]) => ({ element, count }));
+            }
+
+            getScrollDepth() {
+                if (this.trackingData.scrollEvents.length === 0) return 0;
+                const lastScroll = this.trackingData.scrollEvents[this.trackingData.scrollEvents.length - 1];
+                return lastScroll.scrollPercentage;
+            }
+
+            getTimeOnPage() {
+                return Math.round((new Date() - this.startTime) / 1000);
+            }
+
+            getFormStats() {
+                const formStats = {
+                    submissions: this.trackingData.formInteractions.filter(f => f.type === 'form_submit').length,
+                    focusEvents: this.trackingData.formInteractions.filter(f => f.type === 'input_focus').length,
+                    blurEvents: this.trackingData.formInteractions.filter(f => f.type === 'input_blur').length
+                };
+                return formStats;
+            }
+
+            getCSSStats() {
+                const cssStats = {
+                    classChanges: this.trackingData.cssObjectInteractions.filter(c => c.type === 'css_class_change').length,
+                    animations: this.trackingData.cssObjectInteractions.filter(c => c.type === 'animation_start').length,
+                    transitions: this.trackingData.cssObjectInteractions.filter(c => c.type === 'transition_start').length
+                };
+                return cssStats;
+            }
+
+            // Public method to get all tracking data
+            getAllTrackingData() {
+                return {
+                    sessionId: this.sessionId,
+                    startTime: this.startTime,
+                    endTime: new Date(),
+                    totalDuration: Math.round((new Date() - this.startTime) / 1000),
+                    data: this.trackingData
+                };
+            }
+
+            // Public method to export data
+            exportData() {
+                const data = this.getAllTrackingData();
+                console.log('📤 Complete Tracking Data Export:', data);
+                return data;
+            }
+        }
+
+        // Initialize the tracker when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the user interaction tracker
+            window.userTracker = new UserInteractionTracker();
+            
+            // Add global methods for easy access
+            window.getTrackingData = () => window.userTracker.getAllTrackingData();
+            window.exportTrackingData = () => window.userTracker.exportData();
+            
+            console.log('🚀 User Interaction Tracking System Ready!');
+            console.log('💡 Use getTrackingData() to get current data');
+            console.log('💡 Use exportTrackingData() to export complete data');
+        });
 </script>
 </head>
 <body>
